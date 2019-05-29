@@ -12,7 +12,7 @@ namespace LogAnalyzer
         public int CustomerId { get; set; }
 
         [JsonProperty("natural_query")]
-        public string NaturalLangQuery { get; set; }
+        public string[] NaturalLangQuery { get; set; }
 
         [JsonProperty("filter")]
         public string Filter { get; set; }

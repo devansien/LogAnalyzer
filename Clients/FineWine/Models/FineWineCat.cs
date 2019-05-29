@@ -12,6 +12,6 @@ namespace LogAnalyzer
         public string Value { get; set; }
 
         [JsonProperty("synonyms")]
-        public List<string> Synonyms { get; set; } = new List<string>();
+        public HashSet<string> Synonyms { get; set; } = new HashSet<string>();
     }
 }

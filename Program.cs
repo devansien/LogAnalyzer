@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace LogAnalyzer
 {
@@ -26,8 +27,24 @@ namespace LogAnalyzer
 
         static void Deserialize()
         {
-            List<FineWineCat> cats = ConvertFineWineJsonToObj<FineWineCat>("finewinecats.json");
+            //List<FineWineCat> cats = ConvertFineWineJsonToObj<FineWineCat>("finewinecats.json");
+
+            List<FineWineCat> cats = ConvertFineWineJsonToObj<FineWineCat>("finewinecatsS.json");
             List<FineWineLog> logs = ConvertFineWineJsonToObj<FineWineLog>("finewinelogs.json");
+
+            var sorted = from entry in FineWineObjManager.GetMostQueriedCat(cats, logs) orderby entry.Value descending select entry;
+
+            int counter = 0;
+            foreach (KeyValuePair<string, int> pair in sorted)
+            {
+                if (counter < 10)
+                    Console.WriteLine("{0}: {1}", pair.Key, pair.Value);
+
+                counter++;
+            }
+
+            //cats = FineWineObjManager.SetCatSynonyms(cats, logs);
+            //FileManager.WriteToJson(cats, "finewinecatsS.json");
         }
 
         static void ConvertFineWineCsvToJson(Type type, string inputFilePath, string outputFilePath)
@@ -48,7 +65,7 @@ namespace LogAnalyzer
                     break;
             }
 
-            WriteToJson(objects, outputFilePath);
+            FileManager.WriteToJson(objects, outputFilePath);
         }
 
         static List<T> ConvertFineWineJsonToObj<T>(string jsonFilePath)
@@ -62,24 +79,6 @@ namespace LogAnalyzer
             }
 
             return objects;
-        }
-
-        static void WriteToJson(List<IObject> objects, string outputFilePath)
-        {
-            using (StreamWriter writer = File.AppendText(outputFilePath))
-            {
-                string json;
-                writer.WriteLine('[');
-
-                for (int i = 0; i < objects.Count; i++)
-                {
-                    json = JsonConvert.SerializeObject(objects[i], Formatting.Indented);
-                    json = i.Equals(objects.Count - 1) ? json : json + ',';
-                    writer.WriteLine(json);
-                }
-
-                writer.WriteLine(']');
-            }
         }
     }
 }
