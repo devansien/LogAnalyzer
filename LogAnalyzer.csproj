@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <Company>Ansien</Company>
+    <Authors>devansien</Authors>
+    <Version>0.1.0</Version>
+    <Product>Log Analyzer</Product>
+    <Description>Log Analyzer Console</Description>
+  </PropertyGroup>
+
+</Project>
