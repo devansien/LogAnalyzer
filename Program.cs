@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace LogAnalyzer
 {
@@ -24,10 +25,16 @@ namespace LogAnalyzer
 
         static void WriteToJson(List<IObject> objects)
         {
-            foreach (IObject obj in objects)
+            using (StreamWriter writer = File.AppendText(""))
             {
-                string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
-                Console.WriteLine(json);
+                JsonSerializer serializer = new JsonSerializer();
+
+                foreach (IObject obj in objects)
+                {
+                    serializer.Serialize(writer, obj);
+                    string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
+                    Console.WriteLine(json);
+                }
             }
         }
     }
