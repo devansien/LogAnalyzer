@@ -10,4 +10,15 @@
     <Description>Log Analyzer Console</Description>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="bin\Debug\netcoreapp2.2\finewinelogs.csv" />
+    <None Include="bin\Debug\netcoreapp2.2\finewinecat.csv" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\newtonsoft.json\9.0.1\lib\netstandard1.0\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

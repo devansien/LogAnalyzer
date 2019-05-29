@@ -1,0 +1,6 @@
+﻿namespace LogAnalyzer
+{
+    interface IObject
+    {
+    }
+}
