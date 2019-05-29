@@ -10,6 +10,7 @@ namespace LogAnalyzer
             Console.WriteLine("Hello World!");
 
             List<string> categories = new List<string>();
+            Console.ReadKey();
         }
     }
 }
