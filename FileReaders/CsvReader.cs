@@ -5,16 +5,16 @@ namespace LogAnalyzer
 {
     class CsvReader
     {
-        public static List<string> ReadLines(string filePath)
+        public static List<string> ReadLines(bool skipFirstLine, string inputFilePath)
         {
-            using (StreamReader reader = new StreamReader(filePath))
+            using (StreamReader reader = new StreamReader(inputFilePath))
             {
                 int counter = 0;
                 List<string> lines = new List<string>();
 
                 while (!reader.EndOfStream)
                 {
-                    if (counter.Equals(0))
+                    if (skipFirstLine && counter.Equals(0))
                         reader.ReadLine();
                     else
                         lines.Add(reader.ReadLine());

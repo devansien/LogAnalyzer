@@ -10,31 +10,31 @@ namespace LogAnalyzer
         static void Main(string[] args)
         {
             Console.WriteLine($"Process started: {DateTime.UtcNow}");
-            ConvertFineWineCsvToJson("finewinelogs.csv");
+            ConvertFineWineCsvToJson("finewinelogs.csv", "finewinelogs.json");
             Console.WriteLine($"Process completed: {DateTime.UtcNow}");
 
             Console.ReadKey();
         }
 
-        static void ConvertFineWineCsvToJson(string filePath)
+        static void ConvertFineWineCsvToJson(string inputFilePath, string outputFilePath)
         {
-            List<string> lines = CsvReader.ReadLines(filePath);
-            List<IObject> logs = CsvReader.GetLogInstances(lines);
-            WriteToJson(logs);
+            List<string> lines = CsvReader.ReadLines(true, inputFilePath);
+            List<IObject> logs = FineWineObjManager.GetLogInstances(lines);
+            WriteToJson(logs, outputFilePath);
         }
 
-        static void WriteToJson(List<IObject> objects)
+        static void WriteToJson(List<IObject> objects, string outputFilePath)
         {
-            using (StreamWriter writer = File.AppendText(""))
+            using (StreamWriter writer = File.AppendText(outputFilePath))
             {
-                JsonSerializer serializer = new JsonSerializer();
-
-                foreach (IObject obj in objects)
+                writer.WriteLine('[');
+                for (int i = 0; i < objects.Count; i++)
                 {
-                    serializer.Serialize(writer, obj);
-                    string json = JsonConvert.SerializeObject(obj, Formatting.Indented);
-                    Console.WriteLine(json);
+                    string json = JsonConvert.SerializeObject(objects[i], Formatting.Indented);
+                    json = i.Equals(objects.Count - 1) ? json : json + ',';
+                    writer.WriteLine(json);
                 }
+                writer.WriteLine(']');
             }
         }
     }
