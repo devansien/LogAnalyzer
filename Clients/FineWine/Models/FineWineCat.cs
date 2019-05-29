@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace LogAnalyzer
 {
@@ -9,5 +10,8 @@ namespace LogAnalyzer
 
         [JsonProperty("value")]
         public string Value { get; set; }
+
+        [JsonProperty("synonyms")]
+        public List<string> Synonyms { get; set; } = new List<string>();
     }
 }
